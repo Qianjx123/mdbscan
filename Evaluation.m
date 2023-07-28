@@ -1,23 +1,23 @@
 % output ARI, NMI, Fmeasure, Accuracy
 function  [NMI,ARI]  = Evaluation(label,idx)
-NMI = nmi( label, idx );%±ê×¼»¯»¥ĞÅÏ¢ºâÁ¿Á½¸öÊı¾İ·Ö²¼µÄÎÇºÏ³Ì¶È
- [AR,RI,MI,HI]=RandIndex(label,idx);%¼ÆËãÁ½¸ö±ê¼Ç£¨ÕæÊµ±ê¼ÇºÍdpcËã·¨±ê¼Ç£©µÄÎÇºÏ³Ì¶È
-[acc,FMeasure,F1,Jaccard] = Fmeasure(label,idx);%¾ùÒ»ĞÔpºÍÍêÕûĞÔrµÄ¼¸ºÎÆ½¾ùÊı
+NMI = nmi( label, idx );%æ ‡å‡†åŒ–äº’ä¿¡æ¯è¡¡é‡ä¸¤ä¸ªæ•°æ®åˆ†å¸ƒçš„å»åˆç¨‹åº¦
+ [AR,RI,MI,HI]=RandIndex(label,idx);%è®¡ç®—ä¸¤ä¸ªæ ‡è®°ï¼ˆçœŸå®æ ‡è®°å’Œdpcç®—æ³•æ ‡è®°ï¼‰çš„å»åˆç¨‹åº¦
+[acc,FMeasure,F1,Jaccard] = Fmeasure(label,idx);%å‡ä¸€æ€§på’Œå®Œæ•´æ€§rçš„å‡ ä½•å¹³å‡æ•°
 % [f_measure,gmean]= Fm(label,idx);
 %  [NewLabel]=BestMapping(label,idx);
 
 ARI=AR;
-fprintf('¾ÛÀà½á¹ûÆÀ¼Û£º \n');
-fprintf('NMIÖ¸±ê£º%5.4f   \n',NMI);%
-fprintf('ARIÖ¸±ê£º%5.4f   \n',AR);
-disp(NMI);disp(AR);
-%  fprintf('RIÖ¸±ê£º%5.4f   \n',RI);
-%  fprintf('JaccardÖ¸±ê£º%5.4f   \n',Jaccard);
-% fprintf('Fowlkes-Mallows scores(FMI)Ö¸±ê£º%5.4f   \n',FMeasure);
-% fprintf('F1Ö¸±ê£º%5.4f   \n',F1);
-% fprintf('FMÖ¸±ê£º%5.4f   \n',f_measure);
-% fprintf('FMÖ¸±ê£º%5.4f   \n',gmean);
+fprintf('èšç±»ç»“æœè¯„ä»·ï¼š \n');
+fprintf('NMIæŒ‡æ ‡ï¼š%5.4f   \n',NMI);%
+fprintf('ARIæŒ‡æ ‡ï¼š%5.4f   \n',AR);
+
+%  fprintf('RIæŒ‡æ ‡ï¼š%5.4f   \n',RI);
+%  fprintf('JaccardæŒ‡æ ‡ï¼š%5.4f   \n',Jaccard);
+% fprintf('Fowlkes-Mallows scores(FMI)æŒ‡æ ‡ï¼š%5.4f   \n',FMeasure);
+% fprintf('F1æŒ‡æ ‡ï¼š%5.4f   \n',F1);
+% fprintf('FMæŒ‡æ ‡ï¼š%5.4f   \n',f_measure);
+% fprintf('FMæŒ‡æ ‡ï¼š%5.4f   \n',gmean);
 %  acc=ClusterAcc(label,NewLabel);
-fprintf('accÖ¸±ê£º%5.4f   \n',acc);
-% fprintf('F1Ö¸±ê£º%5.4f   \n',F1);
+fprintf('accæŒ‡æ ‡ï¼š%5.4f   \n',acc);
+% fprintf('F1æŒ‡æ ‡ï¼š%5.4f   \n',F1);
 end
