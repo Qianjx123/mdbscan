@@ -7,31 +7,31 @@ k=5;% for knn
 t=0.7;% for selecting low density data
 epsilon=1.3; % for dbscan
 MinPts=3; % for dbscan
-%% Ïà¶ÔÃÜ¶È²¿·Ö
+%% ç›¸å¯¹å¯†åº¦éƒ¨åˆ†
 D = pdist(data);
-Simi=squareform(D);%µÃµ½¾àÀë¾ØÕó
+Simi=squareform(D);%å¾—åˆ°è·ç¦»çŸ©é˜µ
 for i=1:size(Simi,1)
     Simi(i,i)=inf;
-end%½«Êı¾İµãÓë×Ô¼ºµÄ¾àÀëÉèÎªÎŞÇî£¬£¬±ÜÃâËã½üÁÚÃÜ¶ÈÊ±½«×Ô¼ºËã½øÈ¥
+end%å°†æ•°æ®ç‚¹ä¸è‡ªå·±çš„è·ç¦»è®¾ä¸ºæ— ç©·ï¼Œï¼Œé¿å…ç®—è¿‘é‚»å¯†åº¦æ—¶å°†è‡ªå·±ç®—è¿›å»
 [sdismat,index] = sort(Simi,2);
-%½«Ã¿Ò»ĞĞµÄÊı¾İ°´ÉıĞòÅÅÁĞĞÎ³ÉĞÂµÄ¾ØÕó£¬index±íÊ¾ĞÂ¾ØÕóÃ¿ĞĞÊı×ÖÔÚÔ­±¾¾ØÕóĞĞÖĞµÄÎ»ÖÃ to obtian KNN
-index=index(:,1:k);%Ë÷ÒıÑ¹ËõÎªÇ°kÁĞ£¨¼´È¡Êı¾İµãµÄk½üÁÚµÄÎ»ÖÃÔÚÔ­¾àÀë¾ØÕóÖĞµÄË÷Òı£©
+%å°†æ¯ä¸€è¡Œçš„æ•°æ®æŒ‰å‡åºæ’åˆ—å½¢æˆæ–°çš„çŸ©é˜µï¼Œindexè¡¨ç¤ºæ–°çŸ©é˜µæ¯è¡Œæ•°å­—åœ¨åŸæœ¬çŸ©é˜µè¡Œä¸­çš„ä½ç½® to obtian KNN
+index=index(:,1:k);%ç´¢å¼•å‹ç¼©ä¸ºå‰kåˆ—ï¼ˆå³å–æ•°æ®ç‚¹çš„kè¿‘é‚»çš„ä½ç½®åœ¨åŸè·ç¦»çŸ©é˜µä¸­çš„ç´¢å¼•ï¼‰
 for i=1:size(data,1)
     knndensity(i)=k/sum(Simi(i,index(i,:)));
-end%ÇóÃ¿¸öµãµÄÏà¶ÔÃÜ¶È
+end%æ±‚æ¯ä¸ªç‚¹çš„ç›¸å¯¹å¯†åº¦
 x=data(:,1);
-y=data(:,2);%Êı¾İµãµÚÒ»ÁĞºÍµÚ¶şÁĞ
-% figure(1)  
-% for i=1:size(data,1)
-%     txt={i};
-%     text(data(i,1),data(i,2),txt,'r',8);%ÓÃÀ´¸øÍ¼¼ÓÉÏËµÃ÷ĞÔÎÄ×Ö
-%     hold on;
-% end%±ê³öÔ­Í¼ÖĞÃ¿¸öµãµÄÎ»ÖÃÉÏÔö¼ÓË³Ğò±êÇ©
+y=data(:,2);%æ•°æ®ç‚¹ç¬¬ä¸€åˆ—å’Œç¬¬äºŒåˆ—
+figure(1)  
+for i=1:size(data,1)
+    txt={i};
+    text(data(i,1),data(i,2),txt,'r',8);%ç”¨æ¥ç»™å›¾åŠ ä¸Šè¯´æ˜æ€§æ–‡å­—
+    hold on;
+end%æ ‡å‡ºåŸå›¾ä¸­æ¯ä¸ªç‚¹çš„ä½ç½®ä¸Šå¢åŠ é¡ºåºæ ‡ç­¾
  xlim([5 45]);
  ylim([4 24]);
 % hold off
 figure(2)
-scatter(1:size(data,1),knndensity)%»­³öÃ¿¸öµãµÄÏà¶ÔÃÜ¶ÈµÄÉ¢µãÍ¼
+scatter(1:size(data,1),knndensity)%ç”»å‡ºæ¯ä¸ªç‚¹çš„ç›¸å¯¹å¯†åº¦çš„æ•£ç‚¹å›¾
 xlabel('samples index','Fontangle','italic','FontSize',15);
 ylabel('rd','Fontangle','italic','FontSize',15);
 hold on
@@ -39,88 +39,88 @@ for i=1:size(data,1)
     txt={i};
     text(i,knndensity(i),txt,'FontSize',8);
     hold on;
-end%±ê³öÉ¢µãÍ¼ÖĞÃ¿¸öµãµÄÎ»ÖÃÉÏÌí¼ÓË³Ğò±êÇ©
-data_lowdensity=find(knndensity<=t);%ÕÒµ½Ïà¶ÔÃÜ¶ÈĞ¡ÓÚtµÄµãµÄË÷Òı
-data_low=data(data_lowdensity,:);%ÕÒ³öµÍÃÜ¶Èµã
+end%æ ‡å‡ºæ•£ç‚¹å›¾ä¸­æ¯ä¸ªç‚¹çš„ä½ç½®ä¸Šæ·»åŠ é¡ºåºæ ‡ç­¾
+data_lowdensity=find(knndensity<=t);%æ‰¾åˆ°ç›¸å¯¹å¯†åº¦å°äºtçš„ç‚¹çš„ç´¢å¼•
+data_low=data(data_lowdensity,:);%æ‰¾å‡ºä½å¯†åº¦ç‚¹
 
-label_low=label(data_lowdensity);%ÕÒ³öµÍÃÜ¶ÈµãµÄÔ­·ÖÀà
+label_low=label(data_lowdensity);%æ‰¾å‡ºä½å¯†åº¦ç‚¹çš„åŸåˆ†ç±»
 % hold off
-% figure(4);
-% drawgraph(label_low,data_low);
+figure(4);
+drawgraph(label_low,data_low);
 % xlim([5 45]);
 % ylim([4 24]);
-% figure(5);
-% drawgraph(label,data);
+figure(5);
+drawgraph(label,data);
 %  xlim([0 45]);
 %  ylim([0 30]);
 % hold off
 
-Clust_low=cell(1,length(label_low));%½¨Á¢Ò»¸ö1*size£¨µÍÃÜ¶ÈµãÊı55£©µÄÔª°ûÊı×é
+Clust_low=cell(1,length(label_low));%å»ºç«‹ä¸€ä¸ª1*sizeï¼ˆä½å¯†åº¦ç‚¹æ•°55ï¼‰çš„å…ƒèƒæ•°ç»„
 
 iter=1;
 
-for i=1:length(label_low)%1µ½55
-    for j=i+1:length(label_low)%i+1µ½55
+for i=1:length(label_low)%1åˆ°55
+    for j=i+1:length(label_low)%i+1åˆ°55
         if intersect(index(data_lowdensity(i),:),index(data_lowdensity(j),:))
-            %index(data_lowdensity(i),:)±íÊ¾µÍÃÜ¶ÈµãµÄk½üÁÚ¾ÓÔÚÊı¾İ¼¯ÖĞµÄÎ»ÖÃ
-            %Èç¹ûÁ½µãµÄk½üÁÚ¾Ó´æÔÚ½»¼¯
+            %index(data_lowdensity(i),:)è¡¨ç¤ºä½å¯†åº¦ç‚¹çš„kè¿‘é‚»å±…åœ¨æ•°æ®é›†ä¸­çš„ä½ç½®
+            %å¦‚æœä¸¤ç‚¹çš„kè¿‘é‚»å±…å­˜åœ¨äº¤é›†
             Clust_low{iter}=unique([Clust_low{iter},i,j]);
-            %ÔòÔª°ûÊı×éµÚi¸öÎ»ÖÃ´æ·Å ÓëµÚi¸öÊı¾İµãÓµÓĞÏàÍ¬µÄk½üÁÚ¾Ó µÄµÍÃÜ¶ÈÊı¾İµã
+            %åˆ™å…ƒèƒæ•°ç»„ç¬¬iä¸ªä½ç½®å­˜æ”¾ ä¸ç¬¬iä¸ªæ•°æ®ç‚¹æ‹¥æœ‰ç›¸åŒçš„kè¿‘é‚»å±… çš„ä½å¯†åº¦æ•°æ®ç‚¹
         end
     end
     iter=iter+1;
-end%Èç¹ûÒ»¸öÊı¾İµãÃ»ÓĞÓëËüÓµÓĞ¹²Í¬µÄk½üÁÚ¾ÓµÄµã£¬ÄÇÕâ¸öµãµÄÔª°ûÊı×éÎª¿Õ£¨ÓĞÎ»ÖÃ£¬Ã»ÄÚÈİ£©
+end%å¦‚æœä¸€ä¸ªæ•°æ®ç‚¹æ²¡æœ‰ä¸å®ƒæ‹¥æœ‰å…±åŒçš„kè¿‘é‚»å±…çš„ç‚¹ï¼Œé‚£è¿™ä¸ªç‚¹çš„å…ƒèƒæ•°ç»„ä¸ºç©ºï¼ˆæœ‰ä½ç½®ï¼Œæ²¡å†…å®¹ï¼‰
 
-% continue to merge¼ÌĞøºÏ²¢ÕÒ³öÀ´µÄµÍÃÜ¶Èµã(ÅÅ³ıÒì³£Öµ)
+% continue to mergeç»§ç»­åˆå¹¶æ‰¾å‡ºæ¥çš„ä½å¯†åº¦ç‚¹(æ’é™¤å¼‚å¸¸å€¼)
 co2=Clust_low;
 for i=1:10000
-    delrec=[];%³õÊ¼»¯¾ØÕó
-    for i=1:size(co2,2)%1µ½size(co2,2)Ñ­»·
-        for j=i+1:size(co2,2)%i+1µ½size(co2,2)Ñ­»·
-            if length(intersect(co2{i}, co2{j} ))>=1%Èç¹ûiºÍjÁ½¸öÔª°ûÊı×éµÄ½»¼¯´óÓÚ1
+    delrec=[];%åˆå§‹åŒ–çŸ©é˜µ
+    for i=1:size(co2,2)%1åˆ°size(co2,2)å¾ªç¯
+        for j=i+1:size(co2,2)%i+1åˆ°size(co2,2)å¾ªç¯
+            if length(intersect(co2{i}, co2{j} ))>=1%å¦‚æœiå’Œjä¸¤ä¸ªå…ƒèƒæ•°ç»„çš„äº¤é›†å¤§äº1
                 co2{i}=unique([co2{i},co2{j}]);
                 co2{j}=[];
-                %j±íÖĞµÄºÏ²¢µ½i±í£¬²¢¼´½«j±íÖÃ¿Õ(Ö»É¾³ıÄÚÈİ)£¬Íâ²¿Ñ­»·µ½j´ÎÊ±ÔòÖ±½ÓÌø¹ı
+                %jè¡¨ä¸­çš„åˆå¹¶åˆ°iè¡¨ï¼Œå¹¶å³å°†jè¡¨ç½®ç©º(åªåˆ é™¤å†…å®¹)ï¼Œå¤–éƒ¨å¾ªç¯åˆ°jæ¬¡æ—¶åˆ™ç›´æ¥è·³è¿‡
                 delrec=[delrec
-                    j];%½«¸ÃÂÖÖÃ¿ÕµÄcell¼ÓÈëdelrecÊı×é
-            end%Èç¹ûÄÚ²¿µÄco2ÎŞÄÚÈİ£¬ÔòÖ±½ÓÏÂÒ»´ÎÑ­»·ÇÒÎ»ÖÃÒ²²»»á±»É¾µô
+                    j];%å°†è¯¥è½®ç½®ç©ºçš„cellåŠ å…¥delrecæ•°ç»„
+            end%å¦‚æœå†…éƒ¨çš„co2æ— å†…å®¹ï¼Œåˆ™ç›´æ¥ä¸‹ä¸€æ¬¡å¾ªç¯ä¸”ä½ç½®ä¹Ÿä¸ä¼šè¢«åˆ æ‰
         end
     end
     
-    if isempty(delrec)%Ã»ÓĞĞèÒªºÏ²¢µÄ¾ÍÌø³öÑ­»·
+    if isempty(delrec)%æ²¡æœ‰éœ€è¦åˆå¹¶çš„å°±è·³å‡ºå¾ªç¯
         break;
     end  
-    %åˆ é™¤co2æ‰?æœ‰ç©ºæ ¼ã??
+    %é’çŠ»æ«co2éµ?éˆå¤Œâ”–éç¬º??
  
-    co2(delrec)=[];%½«µÚdelrec¸öcellµÄÎ»ÖÃÉ¾³ı
+    co2(delrec)=[];%å°†ç¬¬delrecä¸ªcellçš„ä½ç½®åˆ é™¤
     delrec=[];
     
 end
 
-% è·å–ä½å¯†åº¦æ•°æ®çš„èšç±»ç»“æœ
+% é‘¾å³°å½‡æµ£åº¡ç˜‘æ´ï¸½æšŸé¹î†¾æ®‘é‘±æ°±è¢«ç¼æ’´ç‰
 Clust_low=[];
-for j=1:length(data_low)%1µ½x(µÍÃÜ¶Èµã¸öÊı)´ÎÑ­»·
+for j=1:length(data_low)%1åˆ°x(ä½å¯†åº¦ç‚¹ä¸ªæ•°)æ¬¡å¾ªç¯
     for i=1:length(co2)
-        if find(co2{i}==j)%Èç¹ûµÚi¸öÔª°ûÊı×éÀïÓĞµÚj¸öµÍÃÜ¶Èµã
-            Clust_low(j)=i;%µÚj¸öÎ»ÖÃ´æÈëµ±Ç°µÍÃÜ¶ÈµãÊôÓÚµÄÔª°ûÊı×éµÄÎ»ÖÃ
+        if find(co2{i}==j)%å¦‚æœç¬¬iä¸ªå…ƒèƒæ•°ç»„é‡Œæœ‰ç¬¬jä¸ªä½å¯†åº¦ç‚¹
+            Clust_low(j)=i;%ç¬¬jä¸ªä½ç½®å­˜å…¥å½“å‰ä½å¯†åº¦ç‚¹å±äºçš„å…ƒèƒæ•°ç»„çš„ä½ç½®
         end
     end
 end
-% å¯¹snnèšç±»èšç±»ç»“æœè¿›è¡Œåˆ¤æ–­ï¼Œç‚¹ç›¸å¯¹å°‘çš„æ˜¯edge points,ç‚¹ç›¸å¯¹å¤šçš„æ˜¯ä½å¯†åº¦ç±»
+% ç€µç®‚nné‘±æ°±è¢«é‘±æ°±è¢«ç¼æ’´ç‰æ©æ¶œî”‘é’ã‚†æŸ‡é”›å²€å£é©ç¨¿î‡®çæˆ æ®‘é„ç—šdge points,éåœ­æµ‰ç€µç‘°î˜¿é¨å‹¬æ§¸æµ£åº¡ç˜‘æ´ï¸¾è¢«
 % cluster_low_order=[];
 
-%% ÒÑĞŞ¸ÄÔ­°æ¼ûtest1
+%% å·²ä¿®æ”¹åŸç‰ˆè§test1
 if isempty(co2)==0
   for i=1:length(co2)
       num_co2(i)=length(co2{i});
-  end%±íÊ¾Ã¿¸öÔª°ûÊı×éÀïÊı¾İµãµÄ¸öÊı
+  end%è¡¨ç¤ºæ¯ä¸ªå…ƒèƒæ•°ç»„é‡Œæ•°æ®ç‚¹çš„ä¸ªæ•°
   cluster_low_order=data_lowdensity(co2{find(num_co2>=sum(num_co2)/length(find(num_co2~=0)))});%
 else
   cluster_low_order=[];
 end
-idx=zeros(length(label),1);%½¨Á¢Ò»¸öºÍ¾ÛÀà±êÇ©´óĞ¡Ò»ÑùµÄ¿ÕÊı×é
+idx=zeros(length(label),1);%å»ºç«‹ä¸€ä¸ªå’Œèšç±»æ ‡ç­¾å¤§å°ä¸€æ ·çš„ç©ºæ•°ç»„
 
-%ĞŞ¸Äsum(num_co2)/length(find(num_co2~=0))
+%ä¿®æ”¹sum(num_co2)/length(find(num_co2~=0))
 % cluster_low_order=data_lowdensity(co2{find (num_co2>=mean(num_co2))});
 
 
@@ -128,40 +128,39 @@ idx=zeros(length(label),1);%½¨Á¢Ò»¸öºÍ¾ÛÀà±êÇ©´óĞ¡Ò»ÑùµÄ¿ÕÊı×é
 
 %cluster_low_order=data_lowdensity(co2{find(num_co2==max(num_co2))});
 
-%find (num_co2>=mean(num_co2))ÕÒµ½Ôª°ûÊı×éÄÚÊı¾İµãÊıÁ¿¸ßÓÚÆ½¾ùÖµµÄÔª°ûÊı×é
-%co2{find (num_co2>=mean(num_co2))}±íÊ¾ÉÏÒ»ĞĞµÄÔª°ûÊı×éÄÚµÄÊı¾İµãÔÚµÍÃÜ¶ÈµãÖĞµÄ´ÎĞò
+%find (num_co2>=mean(num_co2))æ‰¾åˆ°å…ƒèƒæ•°ç»„å†…æ•°æ®ç‚¹æ•°é‡é«˜äºå¹³å‡å€¼çš„å…ƒèƒæ•°ç»„
+%co2{find (num_co2>=mean(num_co2))}è¡¨ç¤ºä¸Šä¸€è¡Œçš„å…ƒèƒæ•°ç»„å†…çš„æ•°æ®ç‚¹åœ¨ä½å¯†åº¦ç‚¹ä¸­çš„æ¬¡åº
 %data_lowdensity(co2{find
-%(num_co2>=mean(num_co2))})ÕÒµ½ÉÏÉÏÒ»ĞĞµÄÔª°ûÊı×éÄÚµÄÊı¾İµãÔÚËùÓĞÊı¾İµãÖĞµÄ´ÎĞò
+%(num_co2>=mean(num_co2))})æ‰¾åˆ°ä¸Šä¸Šä¸€è¡Œçš„å…ƒèƒæ•°ç»„å†…çš„æ•°æ®ç‚¹åœ¨æ‰€æœ‰æ•°æ®ç‚¹ä¸­çš„æ¬¡åº
 for i=1:length(cluster_low_order)
-    idx(cluster_low_order(i))=200;% æ‰?æœ‰ä½å¯†åº¦ç±»çš„æ•°æ®ç‚¹çš„æ ‡ç­¾éƒ½è®¾ç½®ä¸º200
-end%½«Âú×ãÉÏÊöÌõ¼şµÄµãµÄ¾ÛÀà±êÇ©¾ùÉèÎª200£¨µÍÃÜ¶Èµã×Ô³ÉÒ»Àà£©
-% figure(6);
-% drawgraph(idx(cluster_low_order),data(cluster_low_order,:));
+    idx(cluster_low_order(i))=200;% éµ?éˆå¤‰ç¶†ç€µå——å®³ç»«è¤æ®‘éç‰ˆåµéåœ­æ®‘éå›©î„·é–®å€Ÿî†•ç¼ƒî†»è´Ÿ200
+end%å°†æ»¡è¶³ä¸Šè¿°æ¡ä»¶çš„ç‚¹çš„èšç±»æ ‡ç­¾å‡è®¾ä¸º200ï¼ˆä½å¯†åº¦ç‚¹è‡ªæˆä¸€ç±»ï¼‰
+figure(6);
+drawgraph(idx(cluster_low_order),data(cluster_low_order,:));
 %  xlim([0 45]);
 %  ylim([0 30]);
 data_order=1:length(label);%=1:size(data,1)
 data_remain=setdiff(data_order,cluster_low_order);
-%ËùÓĞµÄ´ÎĞò¼õÈ¥·ûºÏÌõ¼şµÄµÍÃÜ¶ÈµãÔÚÔ­Êı¾İ¼¯ÖĞµÄ´ÎĞò£¬Ê£ÏÂÓÃÓÚDBSCANµÄÊı¾İµãµÄ´ÎĞò£¨¸ßÃÜ¶ÈµãÒÔ¼°²»·ûºÏÌõ¼şµÄµÍÃÜ¶Èµã£©
-data_high=data(data_remain,:);%µÃµ½¸ßÃÜ¶ÈµãÊı¾İ¼¯data_remainÎªdata_highÔÚÔ­Êı¾İ¼¯ÖĞµÄÎ»ÖÃ
-%% dbscan èšç±»é«˜å¯†åº¦æ•°æ?
-%ÔÚ¸ßÃÜ¶ÈµãÊı¾İ¼¯ÉÏÔËĞĞDBSCAN
+%æ‰€æœ‰çš„æ¬¡åºå‡å»ç¬¦åˆæ¡ä»¶çš„ä½å¯†åº¦ç‚¹åœ¨åŸæ•°æ®é›†ä¸­çš„æ¬¡åºï¼Œå‰©ä¸‹ç”¨äºDBSCANçš„æ•°æ®ç‚¹çš„æ¬¡åºï¼ˆé«˜å¯†åº¦ç‚¹ä»¥åŠä¸ç¬¦åˆæ¡ä»¶çš„ä½å¯†åº¦ç‚¹ï¼‰
+data_high=data(data_remain,:);%å¾—åˆ°é«˜å¯†åº¦ç‚¹æ•°æ®é›†data_remainä¸ºdata_highåœ¨åŸæ•°æ®é›†ä¸­çš„ä½ç½®
+%% dbscan é‘±æ°±è¢«æ¥‚æ¨ºç˜‘æ´ï¸½æšŸé¹?
+%åœ¨é«˜å¯†åº¦ç‚¹æ•°æ®é›†ä¸Šè¿è¡ŒDBSCAN
 Clust_high=DBSCAN(data_high,epsilon,MinPts);
-idx(data_remain)=Clust_high;%¸øÊ£Óàµã±êÉÏ±êÇ©
-% figure(7);
-% drawgraph(Clust_high,data_high);
-% å°†å™ªå£°ç‚¹åˆ†é…ç»™æœ€è¿‘çš„dbscanç±»ã??
-noise=data_remain(find(Clust_high==100));%ÕÒ³öDBSCANËã·¨ÕÒ³öÀ´µÄÔëÒôµãÔÚÔªÊı¾İ¼¯µÄÎ»ÖÃ
+idx(data_remain)=Clust_high;%ç»™å‰©ä½™ç‚¹æ ‡ä¸Šæ ‡ç­¾
+figure(7);
+drawgraph(Clust_high,data_high);
+% çå——æ«”æ¾¹æ‰®å£é’å—›å¤ç¼æ¬æ¸¶æ©æˆ æ®‘dbscanç»«æ±‡??
+noise=data_remain(find(Clust_high==100));%æ‰¾å‡ºDBSCANç®—æ³•æ‰¾å‡ºæ¥çš„å™ªéŸ³ç‚¹åœ¨å…ƒæ•°æ®é›†çš„ä½ç½®
 non_noise_and_low=setdiff(data_remain,noise);
-%ÔÚÓÃÓÚDBSCANµÄÊı¾İ¼¯ÖĞÅÅ³ıÔëÒôµã£¬ÁôÏÂ¼È²»ÊÇÔëÒôµãÓÖ²»ÊÇµÍÃÜ¶ÈµãÔÚÔ­Êı¾İ¼¯ÖĞµÄÎ»ÖÃ
-simi_noise_nonnoise=Simi(noise,non_noise_and_low);%µÃµ½ÔëÒôµãºÍµã£¨¼È²»ÊÇÔëÒôµãÓÖ²»ÊÇµÍÃÜ¶Èµã£©µÄ¾àÀë¾ØÕó
-[val,pos]=min(simi_noise_nonnoise,[],2);%ÕÒ³öÉÏÊö¾àÀë¾ØÕóÃ¿Ò»ĞĞµÄ×îĞ¡Öµ£¬²¢·µ»Ø×îĞ¡ÖµÔÚÃ¿Ò»ĞĞµÄÎ»ÖÃ
+%åœ¨ç”¨äºDBSCANçš„æ•°æ®é›†ä¸­æ’é™¤å™ªéŸ³ç‚¹ï¼Œç•™ä¸‹æ—¢ä¸æ˜¯å™ªéŸ³ç‚¹åˆä¸æ˜¯ä½å¯†åº¦ç‚¹åœ¨åŸæ•°æ®é›†ä¸­çš„ä½ç½®
+simi_noise_nonnoise=Simi(noise,non_noise_and_low);%å¾—åˆ°å™ªéŸ³ç‚¹å’Œç‚¹ï¼ˆæ—¢ä¸æ˜¯å™ªéŸ³ç‚¹åˆä¸æ˜¯ä½å¯†åº¦ç‚¹ï¼‰çš„è·ç¦»çŸ©é˜µ
+[val,pos]=min(simi_noise_nonnoise,[],2);%æ‰¾å‡ºä¸Šè¿°è·ç¦»çŸ©é˜µæ¯ä¸€è¡Œçš„æœ€å°å€¼ï¼Œå¹¶è¿”å›æœ€å°å€¼åœ¨æ¯ä¸€è¡Œçš„ä½ç½®
 for i=1:length(noise)
     pos_order=non_noise_and_low(pos);
     idx(noise(i))=idx(pos_order(i));
-end%½«ÔëÒôµã·ÖÅä¸øÀëËû×î½üµÄµãËùÔÚµÄ¾ÛÀà
-% figure(8);
-% % drawgraph(idx(find(idx~=200)),data(51:399,:));
-% drawgraph(idx,data);
+end%å°†å™ªéŸ³ç‚¹åˆ†é…ç»™ç¦»ä»–æœ€è¿‘çš„ç‚¹æ‰€åœ¨çš„èšç±»
+figure(8);
+drawgraph(idx,data);
 Evaluation(label,idx);
 % figure(7);
 % drawgraph(label,data);
@@ -171,8 +170,8 @@ Evaluation(label,idx);
 
 finall=length(unique(idx));
 finalll=length(unique(label));
-fprintf('¾ÛÀà¸öÊı£º%d \n',finall);
-fprintf('¾ÛÀàÊµ¼Ê¸öÊı£º%d \n',finalll);
+fprintf('èšç±»ä¸ªæ•°ï¼š%d \n',finall);
+fprintf('èšç±»å®é™…ä¸ªæ•°ï¼š%d \n',finalll);
 
 
 
